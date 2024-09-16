@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 #pragma warning(disable:4996)
@@ -19,9 +20,11 @@ int main(void) {
 
 	for (int i = 0; i < N; i++) {
 		cin >> temp;
-		auto it = find(v.begin(), v.end(), temp);
-		if (it == v.end()) v.push_back(temp);
+		v.push_back(temp);
 	}
+
+	set<string> s(v.begin(), v.end());
+	v.assign(s.begin(), s.end());
 
 	sort(v.begin(), v.end(), compare);
 
