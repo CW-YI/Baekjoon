@@ -7,6 +7,9 @@ int main(void) {
 	stack<char> s;
 	int num = 0;
 
+	cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
+
 	cin >> input;
 	for (int i = 0; i < input.length(); i++) {
 		if (input[i] == '(' && input[i+1] == ')') {
