@@ -17,9 +17,8 @@ int main(void) {
 		q.pop();
 		if (q.size() == 1) break;
 
-		temp = q.front();
+		q.push(q.front());
 		q.pop();
-		q.push(temp);
 	}
 
 	cout << q.front();
