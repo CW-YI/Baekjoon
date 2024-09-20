@@ -1,13 +1,12 @@
 #include <iostream>
-#include <set>
+#include <vector>
 using namespace std;
 
 int main(void) {
 	cin.tie(NULL);
 	ios_base::sync_with_stdio(false);
 
-	set<int> s;
-	set<int>::iterator iter;
+	vector<int> v(21, 0);
 	string str;
 	int N, temp;
 	cin >> N;
@@ -15,32 +14,23 @@ int main(void) {
 	for (int i = 0; i < N; i++) {
 		cin >> str;
 		if (str == "add") {
-			cin >> temp; s.insert(temp);
+			cin >> temp; 
+			v[temp] = 1;
 		}
 		else if (str == "remove") {
 			cin >> temp;
-			iter = s.find(temp);
-
-			if (iter != s.end()) s.erase(temp);
+			v[temp] = 0;
 		}
 		else if (str == "check") {
 			cin >> temp;
-			iter = s.find(temp);
-
-			if (iter != s.end()) cout << 1 << "\n";
-			else cout << 0 << "\n";
+			cout << v[temp] << "\n";
 		}
 		else if (str == "toggle") {
 			cin >> temp;
-			iter = s.find(temp);
-
-			if (iter != s.end()) s.erase(temp);
-			else s.insert(temp);
+			v[temp] ^= 1;
 		}
-		else if (str == "all") {
-			for (int j = 1; j <= 20; j++) s.insert(j);
-		}
-		else if (str == "empty") s.clear();
+		else if (str == "all") for (int j = 1; j <= 20; j++) v[j] = 1;
+		else if (str == "empty") for (int j = 1; j <= 20; j++) v[j] = 0;
 	}
 	return 0;
 }
