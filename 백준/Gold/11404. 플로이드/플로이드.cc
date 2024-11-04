@@ -1,6 +1,5 @@
 #include <iostream>
-#include <vector>
-#include <queue>
+#include <algorithm>
 using namespace std;
 
 const int INF = 1e9;
@@ -9,9 +8,10 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<int>> v(n + 1, vector<int>(n + 1, INF));
-    int a, b, c;
+    int v[101][101];
+    fill(&v[0][0], &v[100][100], INF);
 
+    int a, b, c;
     for (int i = 1; i <= n; i++)
         v[i][i] = 0;
 
