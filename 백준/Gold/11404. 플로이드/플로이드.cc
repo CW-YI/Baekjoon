@@ -5,6 +5,8 @@ using namespace std;
 const int INF = 1e9;
 
 int main() {
+    cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
     int n, m;
     cin >> n >> m;
 
