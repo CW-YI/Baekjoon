@@ -23,8 +23,7 @@ int main() {
     for (int k = 1; k <= n; k++)
         for (int i = 1; i <= n; i++)
             for (int j = 1; j <= n; j++)
-                if (v[i][k] != INF && v[k][j] != INF)
-                    v[i][j] = min(v[i][j], v[i][k] + v[k][j]);
+                v[i][j] = min(v[i][j], v[i][k] + v[k][j]);
 
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
