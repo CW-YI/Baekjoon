@@ -4,12 +4,14 @@
 #include <tuple>
 
 using namespace std;
+const int di[4] = { -1, 1, 0, 0 };
+const int dj[4] = { 0, 0, -1, 1 };
 
 int main() {
     cin.tie(NULL); cout.tie(NULL);
     ios_base::sync_with_stdio(false);
     
-    int N, M;
+    int N, M, result = -1;
     cin >> N >> M;
 
     vector<vector<int>> v(N, vector<int>(M));
@@ -23,6 +25,7 @@ int main() {
     vector<vector<int>> visit(N, vector<int>(M, -1));
     vector<vector<int>> visit_wall(N, vector<int>(M, -1));
     queue<tuple<int, int, int, int>> q;
+
     q.push(make_tuple(0, 0, 0, 1));
     visit[0][0] = 1;
 
@@ -30,53 +33,25 @@ int main() {
         auto [i, j, k, cnt] = q.front();
         q.pop();
 
-        if (i - 1 >= 0 ) { // 상
-            if (k + v[i - 1][j] == 1 && visit_wall[i - 1][j] == -1) { // 이번 차례에 벽뚫
-                visit_wall[i - 1][j] = cnt + 1;
-                q.push(make_tuple(i - 1, j, 1, cnt + 1));
-            }
-            else if (k + v[i - 1][j] == 0 && visit[i - 1][j] == -1) { // 벽뚫 한 적X
-                visit[i - 1][j] = cnt + 1;
-                q.push(make_tuple(i - 1, j, 0, cnt + 1));
-            }
-        }
-        if (i + 1 < N) { // 하
-            if (k + v[i + 1][j] == 1 && visit_wall[i + 1][j] == -1) {
-                visit_wall[i + 1][j] = cnt + 1;
-                q.push(make_tuple(i + 1, j, 1, cnt + 1));
-            }
-            else if (k + v[i + 1][j] == 0 && visit[i + 1][j] == -1) {
-                visit[i + 1][j] = cnt + 1;
-                q.push(make_tuple(i + 1, j, 0, cnt + 1));
-            }
-        }
-        if (j - 1 >= 0) { // 좌
-            if (k + v[i][j - 1] == 1 && visit_wall[i][j - 1] == -1) {
-                visit_wall[i][j - 1] = cnt + 1;
-                q.push(make_tuple(i, j - 1, 1, cnt + 1));
-            }
-            else if (k + v[i][j - 1] == 0 && visit[i][j - 1] == -1) {
-                visit[i][j - 1] = cnt + 1;
-                q.push(make_tuple(i, j - 1, 0, cnt + 1));
-            }
-        }
-        if (j + 1 < M) { // 우
-            if (k + v[i][j + 1] == 1 && visit_wall[i][j + 1] == -1) {
-                visit_wall[i][j + 1] = cnt + 1;
-                q.push(make_tuple(i, j + 1, 1, cnt + 1));
-            }
-            else if (k + v[i][j + 1] == 0 && visit[i][j + 1] == -1) {
-                visit[i][j + 1] = cnt + 1;
-                q.push(make_tuple(i, j + 1, 0, cnt + 1));
+        for (int d = 0; d < 4; d++) {
+            int ni = i + di[d], nj = j + dj[d];
+
+            if (ni >= 0 && nj >= 0 && ni < N && nj < M) {
+                if (k + v[ni][nj] == 1 && visit_wall[ni][nj] == -1) { // 벽뚫
+                    visit_wall[ni][nj] = cnt + 1;
+                    q.push(make_tuple(ni, nj, 1, cnt + 1));
+                }
+                else if (k + v[ni][nj] == 0 && visit[ni][nj] == -1) { // 벽뚫X
+                    visit[ni][nj] = cnt + 1;
+                    q.push(make_tuple(ni, nj, 0, cnt + 1));
+                }
             }
         }
     }
 
-    int result = -1;
     if (visit[N - 1][M - 1] != -1 && visit_wall[N - 1][M - 1] != -1) result = min(visit[N - 1][M - 1], visit_wall[N - 1][M - 1]);
     else result = (visit[N - 1][M - 1] != -1 ? visit[N - 1][M - 1] : visit_wall[N - 1][M - 1]);
 
     cout << result;
-
     return 0;
 }
