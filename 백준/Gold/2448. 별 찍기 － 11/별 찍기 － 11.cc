@@ -3,13 +3,12 @@
 #include <cmath>
 
 using namespace std;
-vector<vector<int>> star;
+int** star;
 
 void basic_star(int i, int j) { // 기준 위치는 제일 왼쪽 끝 아래
     for (int k = 0; k < 5; k++) star[i][j + k] = 1;
     star[i - 1][j + 1] = 1; star[i - 1][j + 3] = 1;
     star[i - 2][j + 2] = 1;
-    // 3 * 5 삼각형
 }
 
 void rBuildStar(int i, int j, int size) { // size는 0 - k
@@ -27,12 +26,13 @@ int main() {
     cin.tie(NULL); cout.tie(NULL);
     ios_base::sync_with_stdio(false);
     
-    int N, exp;
-    cin >> N;
-    exp = log2(N / 3);
-    star.resize(N, vector<int>((N / 3) * 6, 0));
+    int N;
 
-    rBuildStar(N - 1, 0, exp);
+    cin >> N;
+    star = new int* [N];
+    for (int i = 0; i < N; i++) star[i] = new int[(N / 3) * 6];
+
+    rBuildStar(N - 1, 0, log2(N / 3));
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < (N / 3) * 6; j++) {
@@ -41,5 +41,8 @@ int main() {
         }
         cout << "\n";
     }
+
+    for (int i = 0; i < N; i++) delete[] star[i];
+    delete[] star;
     return 0;
 }
