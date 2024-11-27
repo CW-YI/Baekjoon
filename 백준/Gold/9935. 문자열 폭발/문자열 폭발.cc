@@ -13,6 +13,7 @@ int main() {
 
     for (char ch : str) {
         result += ch;
+        if (ch != boom[Blen - 1]) continue;
         if (result.size() >= Blen && result.substr(result.size() - Blen) == boom)
             result.erase(result.size() - Blen);
     }
