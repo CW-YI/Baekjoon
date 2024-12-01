@@ -32,21 +32,18 @@ int main() {
         visit[i] = v[i].first;
 
         while (!q.empty()) {
-            int curNode = q.top().first;
-            int curDistance = q.top().second;
+            auto [curNode, curDist] = q.top();
             q.pop();
 
-            if (visit[curNode] < curDistance) continue;
+            if (visit[curNode] < curDist) continue;
 
-            for (const auto& nextPair : v[curNode].second) {
-                int nextNode = nextPair.first;
-                int nextWeight = nextPair.second;
+            for (const auto& [nextNode, nextWeight] : v[curNode].second) {
+                int nextDist = curDist + nextWeight;
+                if (nextDist > M) continue;
+                if (visit[nextNode] < nextDist) continue;
 
-                if (curDistance + nextWeight > M) continue;
-                if (visit[nextNode] < curDistance + nextWeight) continue;
-
-                q.push({ nextNode, curDistance + nextWeight });
-                visit[nextNode] = curDistance + nextWeight;
+                q.push({ nextNode, nextDist });
+                visit[nextNode] = nextDist;
             }
         }
 
