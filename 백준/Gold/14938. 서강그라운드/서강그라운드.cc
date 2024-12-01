@@ -28,11 +28,11 @@ int main() {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
         vector<int> visit(N + 1, INF);
 
-        q.push({ i, 0 });
+        q.push({ 0, i });
         visit[i] = v[i].first;
 
         while (!q.empty()) {
-            auto [curNode, curDist] = q.top();
+            auto [curDist, curNode] = q.top();
             q.pop();
 
             if (visit[curNode] < curDist) continue;
@@ -42,7 +42,7 @@ int main() {
                 if (nextDist > M) continue;
                 if (visit[nextNode] < nextDist) continue;
 
-                q.push({ nextNode, nextDist });
+                q.push({ nextDist, nextNode });
                 visit[nextNode] = nextDist;
             }
         }
