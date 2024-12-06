@@ -2,26 +2,8 @@
 #include <vector>
 
 using namespace std;
-vector<pair<int, int>> v;
-vector<vector<int>> dp;
 int N;
 const int INF = 1e9;
-
-int FindMin(int start, int end) {
-    if (start == end) return 0;
-    if (dp[start][end] != -1) return dp[start][end];
-    
-    int minSum = INF;
-    for (int k = start; k < end; k++) {
-        int sum = FindMin(start, k) + FindMin(k + 1, end) +
-            v[start].first * v[k].second * v[end].second;
-
-        minSum = min(sum, minSum);
-    }
-
-    dp[start][end] = minSum;
-    return dp[start][end];
-}
 
 int main() {
     cin.tie(NULL); cout.tie(NULL);
@@ -29,14 +11,25 @@ int main() {
 
     cin >> N;
 
-    v.resize(N);
-    dp.resize(N, vector<int>(N, -1));
+    vector<pair<int, int>> v(N);
+    vector<vector<int>> dp(N, vector<int>(N, 0));
 
-    for (int i = 0, n1, n2; i < N; i++) {
-        cin >> n1 >> n2;
-        v[i] = { n1, n2 };
+    for (int i = 0; i < N; i++)
+        cin >> v[i].first >> v[i].second;
+
+    for (int l = 2; l <= N; l++) {
+        for (int s = 0; s + l - 1 < N; s++) {
+            int e = s + l - 1;
+            dp[s][e] = INF;
+
+            for (int k = s; k < e; k++) {
+                int sum = dp[s][k] + dp[k + 1][e] +
+                    v[s].first * v[k].second * v[e].second;
+                dp[s][e] = min(dp[s][e], sum);
+            }
+        }
     }
 
-    cout << FindMin(0, N - 1);
+    cout << dp[0][N - 1];
     return 0;
 }
