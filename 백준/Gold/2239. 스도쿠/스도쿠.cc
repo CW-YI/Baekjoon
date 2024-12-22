@@ -15,23 +15,14 @@ void printAnswer() {
     exit(0);
 }
 
-bool checkSqaure(int x, int y, int num) {
+bool check(int x, int y, int num) {
+    for (int i = 0; i < 9; i++)
+        if (v[x][i] == num || v[i][y] == num) return false;
+
     int findX = x / 3, findY = y / 3;
     for (int i = findX * 3; i < findX * 3 + 3; i++)
         for (int j = findY * 3; j < findY * 3 + 3; j++)
             if (v[i][j] == num) return false;
-    return true;
-}
-
-bool checkRow(int x, int num) {
-    for (int i = 0; i < 9; i++)
-        if (v[x][i] == num) return false;
-    return true;
-}
-
-bool checkCol(int y, int num) {
-    for (int i = 0; i < 9; i++)
-        if (v[i][y] == num) return false;
     return true;
 }
 
@@ -41,7 +32,7 @@ void FindAnswer(int zeroIndex) {
     auto [x, y] = zeroInput[zeroIndex];
 
     for (int i = 1; i <= 9; i++) {
-        if (!checkSqaure(x, y, i) || !checkRow(x, i) || !checkCol(y, i)) continue;
+        if (!check(x, y, i)) continue;
 
         v[x][y] = i;
         if (zeroIndex == inputSize - 1) printAnswer();
