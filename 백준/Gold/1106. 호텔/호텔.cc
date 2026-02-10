@@ -11,7 +11,7 @@ int main() {
     cin >> N >> M;
 
     vector<vector<int>> v(M, vector<int>(2, 0)); // Mx2 벡터
-    vector<int> dp(5000, 1e9); // dp 벡터(i번째 배열은 고객 수 i명의 최솟값)
+    vector<int> dp(1100, 1e9); // dp 벡터(i번째 배열은 고객 수 i명의 최솟값)
 
     for (int i = 0; i < M; i++) {
         cin >> v[i][0] >> v[i][1]; // 돈, 고객 수
@@ -20,7 +20,7 @@ int main() {
 
 
     int min = 1e9;
-    for (int i = 1; i < 5000; i++) {
+    for (int i = 1; i < 1100; i++) {
         // i번째 배열에 대한 최솟값 찾기
 
         for (int j = 1; j < i; j++) {
