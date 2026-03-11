@@ -26,19 +26,14 @@ int main() {
     for (int i = 2; i <= N; i++)
         if (prime[i]) num.push_back(i);
 
-    int sum = 0, cnt = 0;
-    for (int s = 0; s < num.size(); s++) { // 시작 포인트
-        for (int d = 1; d + s <= num.size(); d++) { // 더하는 개수(거리)
-            sum = 0;
-            for (int r = s; r < s + d; r++) {
-                sum += num[r];
-                if (sum > N) break;
-            }
-            if (sum == N) {
-                cnt++; break;
-            }
-            else if (sum > N) break;
+    int left = 0, right = 0, sum = 0, cnt = 0; // 투포인터로 변경
+    while (true) {
+        if (sum >= N) {
+            if (sum == N) cnt++;
+            sum -= num[left++];
         }
+        else if (right == num.size()) break;
+        else sum += num[right++];
     }
 
     cout << cnt;
