@@ -24,14 +24,15 @@ int main() {
     int n1, n2, Cycle = 0;
     for (int i = 0; i < M; i++) {
         cin >> n1 >> n2;
-        if (Cycle != 0) continue;
-
         int r1 = checkParent(n1), r2 = checkParent(n2); // 루트 찾기
 
-        if (r1 == r2) Cycle = i + 1; // 사이클
+        if (r1 == r2) {
+            cout << i + 1;
+            return 0;
+        }
         else parent[r2] = r1;
     }
 
-    cout << Cycle;
+    cout << 0;
     return 0;
 }
