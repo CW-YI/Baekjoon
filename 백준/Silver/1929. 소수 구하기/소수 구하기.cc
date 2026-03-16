@@ -13,7 +13,7 @@ int main() {
     vector<bool> num(M + 1, true);
     num[1] = false;
 
-    for (int i = 2; i <= M; i++) {
+    for (int i = 2; i * i <= M; i++) {
         for (int j = 2; i * j <= M; j++) {
             if (num[i * j]) num[i * j] = false;
         }
